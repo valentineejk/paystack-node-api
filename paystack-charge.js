@@ -2,6 +2,7 @@ const https = require('https')
 
 const amount = 30000
 
+const secret = process.env.PAYSTACK_SECRET_KEY
 
 const params = JSON.stringify({
     "email": "customer@email.com",
@@ -15,7 +16,7 @@ const options = {
     path: '/transaction/initialize',
     method: 'POST',
     headers: {
-        Authorization: 'Bearer PAYSTACK_SECRET',
+        Authorization: `Bearer ${secret}`,
         'Content-Type': 'application/json'
     }
 }
