@@ -1,33 +1,13 @@
-const https = require('https')
+const express = require('express')
+const app = express()
+const port = 3000
+const paystack = require('./paystack-charge')
 
 
-const params = JSON.stringify({
-    "email": "customer@email.com",
-    "amount": "1000000"
+app.get('/api', (req, res) => {
+    res.send(paystack)
 })
 
-
-const options = {
-    hostname: 'api.paystack.co',
-    port: 443,
-    path: '/transaction/initialize',
-    method: 'POST',
-    headers: {
-        Authorization: 'Bearer sk_live_4002bbddfa912cad07f28357eef074f6f1fca2d6',
-        'Content-Type': 'application/json'
-    }
-}
-const req = https.request(options, res => {
-    let data = ''
-    res.on('data', (chunk) => {
-        data += chunk
-    });
-    res.on('end', () => {
-        console.log(JSON.parse(data))
-    })
-}).on('error', error => {
-    console.error(error)
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
 })
-
-req.write(params)
-req.end()
