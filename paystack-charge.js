@@ -26,7 +26,10 @@ const req = https.request(options, res => {
         data += chunk
     });
     res.on('end', () => {
-        console.log(JSON.parse(data))
+
+        return data
+
+
     })
 }).on('error', error => {
     console.error(error)
